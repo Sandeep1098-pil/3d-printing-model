@@ -6,25 +6,15 @@ from flask import Flask, request, render_template, redirect, url_for
 app = Flask(__name__, template_folder='templates')
 
 try:
-    model_path = r"C:\Users\USER\3d-printing-model\flask\3d_print_model.pkl"
+    model_path = r"C:\Users\USER\3d-printing-model\flask\3d_print.pkl"
     model = joblib.load(model_path)
 except FileNotFoundError:
     print(f"ERROR: Model file not found at path: {model_path}")
     model = None
 
-@app.route('/')
-def index():
-    return render_template('login.html')
 
-@app.route('/login', methods=['GET'])
-def login():
-    return render_template('login.html')
 
-@app.route('/signup',methods=['GET'])
-def signup():
-    return render_template('signup.html')
-
-@app.route('/home', methods=['GET'])
+@app.route('/', methods=['GET'])
 def home():
     return render_template('home.html')
 
