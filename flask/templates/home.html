@@ -3,79 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Printing Material Prediction</title>
+    <title>Predict 3D Printing Material</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <div class="container card-container">
-        <h1>Enter 3D Printing Parameters</h1>
 
-        <form action="/predict" method="post" class="form-box">
-            <div class="row">
-                <div class="col">
-                    <label>Layer Height (mm)</label>
-                    <input type="number" step="0.01" name="layer_height" required>
-                </div>
-                <div class="col">
-                    <label>Wall Thickness (mm)</label>
-                    <input type="number" step="0.01" name="wall_thickness" required>
-                </div>
+<div class="container card-container">
+    <h1>Enter 3D Printing Parameters</h1>
+
+    <form action="{{ url_for('predict') }}" method="post" class="form-box">
+        <div class="row">
+            <div class="col">
+                <label>Layer Height (mm)</label>
+                <input type="number" step="0.01" name="layer_height" required>
             </div>
-
-            <div class="row">
-                <div class="col">
-                    <label>Infill Density (%)</label>
-                    <input type="number" name="infill_density" required>
-                </div>
-                <div class="col">
-                    <label>Infill Pattern</label>
-                    <select name="infill_pattern_honeycomb" required>
-                        <option value="" disabled selected>Select Pattern</option>
-                        <option value="0">Grid</option>
-                        <option value="1">Honeycomb</option>
-                    </select>
-                </div>
+            <div class="col">
+                <label>Wall Thickness (mm)</label>
+                <input type="number" step="0.01" name="wall_thickness" required>
             </div>
+        </div>
 
-            <div class="row">
-                <div class="col">
-                    <label>Nozzle Temperature (°C)</label>
-                    <input type="number" name="nozzle_temperature" required>
-                </div>
-                <div class="col">
-                    <label>Bed Temperature (°C)</label>
-                    <input type="number" name="bed_temperature" required>
-                </div>
+        <div class="row">
+            <div class="col">
+                <label>Infill Density (%)</label>
+                <input type="number" name="infill_density" required>
             </div>
-
-            <div class="row">
-                <div class="col">
-                    <label>Print Speed (mm/s)</label>
-                    <input type="number" name="print_speed" required>
-                </div>
-                <div class="col">
-                    <label>Fan Speed (%)</label>
-                    <input type="number" name="fan_speed" required>
-                </div>
+            <div class="col">
+                <label>Infill Pattern</label>
+                <select name="infill_pattern_honeycomb" required>
+                    <option value="" disabled selected>Select Pattern</option>
+                    <option value="0">Grid</option>
+                    <option value="1">Honeycomb</option>
+                </select>
             </div>
+        </div>
 
-            <div class="row">
-                <div class="col">
-                    <label>Roughness</label>
-                    <input type="number" step="0.01" name="roughness" required>
-                </div>
-                <div class="col">
-                    <label>Tension Strength</label>
-                    <input type="number" step="0.01" name="tension_strenght" required>
-                </div>
-                <div class="col">
-                    <label>Elongation</label>
-                    <input type="number" step="0.01" name="elongation" required>
-                </div>
+        <div class="row">
+            <div class="col">
+                <label>Nozzle Temperature (°C)</label>
+                <input type="number" name="nozzle_temperature" required>
             </div>
+            <div class="col">
+                <label>Bed Temperature (°C)</label>
+                <input type="number" name="bed_temperature" required>
+            </div>
+        </div>
 
-            <button type="submit">Predict Material</button>
-        </form>
-    </div>
+        <div class="row">
+            <div class="col">
+                <label>Print Speed (mm/s)</label>
+                <input type="number" name="print_speed" required>
+            </div>
+            <div class="col">
+                <label>Fan Speed (%)</label>
+                <input type="number" name="fan_speed" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label>Roughness</label>
+                <input type="number" step="0.01" name="roughness" required>
+            </div>
+            <div class="col">
+                <label>Tension Strength</label>
+                <input type="number" step="0.01" name="tension_strenght" required>
+            </div>
+            <div class="col">
+                <label>Elongation</label>
+                <input type="number" step="0.01" name="elongation" required>
+            </div>
+        </div>
+
+        <button type="submit">Predict Material</button>
+    </form>
+</div>
 </body>
 </html>

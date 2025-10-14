@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prediction Result</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/result.css') }}">
 </head>
 <body>
     <nav class="navbar navbar-dark bg-dark shadow-sm">
@@ -13,19 +16,29 @@
         </div>
     </nav>
 
-    <div class="container mt-5">
-        <div class="card text-center p-4 mb-4">
+    <div class="container my-5">
+        <div class="card text-center p-4 p-md-5 mb-4 result-card">
             <h1 class="fw-bold mb-3">Prediction Result</h1>
-            <h2>{{ material }}</h2>
+
+            <h2 class="material-name">
+                {% if material == 'ABS' %}
+                    Acrylonitrile Butadiene Styrene (ABS)
+                {% elif material == 'PLA' %}
+                    Polylactic Acid (PLA)
+                {% else %}
+                    {{ material }}
+                {% endif %}
+            </h2>
+
             <p class="lead">{{ description }}</p>
         </div>
 
         {% if inputs %}
-        <div class="card p-4 mb-4">
+        <div class="card p-4 mb-4 summary-card">
             <h3 class="fw-bold text-center mb-4">Input Parameters Summary</h3>
             <div class="row">
                 <div class="col-md-6">
-                    <ul class="list-group">
+                    <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex justify-content-between"><strong>Layer Height:</strong> <span>{{ inputs.layer_height }} mm</span></li>
                         <li class="list-group-item d-flex justify-content-between"><strong>Wall Thickness:</strong> <span>{{ inputs.wall_thickness }} mm</span></li>
                         <li class="list-group-item d-flex justify-content-between"><strong>Infill Density:</strong> <span>{{ inputs.infill_density }} %</span></li>
@@ -43,7 +56,7 @@
                     </ul>
                 </div>
                 <div class="col-md-6 mt-3 mt-md-0">
-                    <ul class="list-group">
+                    <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex justify-content-between"><strong>Print Speed:</strong> <span>{{ inputs.print_speed }} mm/s</span></li>
                         <li class="list-group-item d-flex justify-content-between"><strong>Fan Speed:</strong> <span>{{ inputs.fan_speed }} %</span></li>
                         <li class="list-group-item d-flex justify-content-between"><strong>Roughness:</strong> <span>{{ inputs.roughness }}</span></li>
@@ -55,8 +68,8 @@
         </div>
         {% endif %}
 
-        <div class="text-center">
-            <a href="/" class="btn btn-primary btn-lg">Make Another Prediction</a>
+        <div class="text-center mt-4">
+            <a href="/home" class="btn btn-primary btn-lg shadow">Make Another Prediction</a>
         </div>
     </div>
 </body>

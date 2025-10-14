@@ -20,49 +20,49 @@ model_features = [
 def map_material(pred):
     return 'PLA' if pred == True else 'ABS'
 
+# -----------------------------
+# Routes
+# -----------------------------
 @app.route('/')
+def index():
+    # Landing page
+    return render_template('index.html')
+
+@app.route('/home')
 def home():
+    # Prediction page
     return render_template('home.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        # Get form inputs
         user_input = {key: float(request.form[key]) for key in model_features}
         user_input['infill_pattern_honeycomb'] = int(user_input['infill_pattern_honeycomb'])
-
-        # Convert to DataFrame
         input_df = pd.DataFrame([user_input], columns=model_features)
-
-        # Scale input
         input_scaled = scaler.transform(input_df)
-
-        # Predict
         raw_prediction = model.predict(input_scaled)[0]
         prediction = map_material(raw_prediction)
 
-        # Optional description
         description_dict = {
             'PLA': 'Good for beginners, low warping, biodegradable.',
-            'ABS': 'Strong, heat-resistant, requires heated bed.',
+            'ABS': 'Strong, heat-resistant, requires heated bed.'
         }
         description = description_dict.get(prediction, '')
 
-        # Render result
-        return render_template(
-            'result.html',
-            material=prediction,
-            description=description,
-            inputs=user_input
-        )
+        return render_template('result.html',
+                               material=prediction,
+                               description=description,
+                               inputs=user_input)
 
     except Exception as e:
-        return render_template(
-            'result.html',
-            material=f"Error: {str(e)}",
-            description='',
-            inputs=None
-        )
+        return render_template('result.html',
+                               material=f"Error: {str(e)}",
+                               description='',
+                               inputs=None)
 
 if __name__ == "__main__":
     app.run(debug=True)

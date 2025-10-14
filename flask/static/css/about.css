@@ -1,0 +1,113 @@
+:root {
+    --primary-color: #007bff;
+    --font-heading: 'Poppins', sans-serif;
+    --font-body: 'Poppins', sans-serif; /* Using Poppins for consistency */
+}
+
+body {
+    font-family: var(--font-body);
+    padding-top: 70px; /* Offset for fixed navbar */
+    background-color: #f8f9fa;
+}
+
+/* --- Hero Section --- */
+.hero-about {
+    background: linear-gradient(rgba(28, 42, 76, 0.7), rgba(13, 18, 43, 0.8)), 
+                url('https://images.unsplash.com/photo-1555617374-94a286a10090?q=80&w=2070') no-repeat center center/cover;
+    height: 60vh;
+    color: #fff;
+}
+
+.hero-about h1, .hero-about .lead {
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.hero-about .lead {
+    font-weight: 300;
+}
+
+/* --- Section Titles --- */
+.section-title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+}
+
+.our-values .section-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* --- Our Values Section Styling --- */
+.value-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.value-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.15);
+}
+
+.value-card h5 {
+    font-weight: 600;
+    color: #343a40;
+}
+
+.icon-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 2rem;
+}
+
+/* --- Footer Social Links --- */
+.social-links a {
+    color: #fff;
+    font-size: 1.25rem;
+    margin: 0 10px;
+    transition: color 0.3s ease, transform 0.3s ease;
+    display: inline-block;
+}
+
+.social-links a:hover {
+    color: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 991px) {
+    .section-title {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .section-title {
+        font-size: 2rem;
+    }
+    .hero-about {
+        height: 50vh;
+    }
+}
