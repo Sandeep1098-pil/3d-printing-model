@@ -3,80 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Predict 3D Printing Material</title>
+    <title>3D Material Predictor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 
-<div class="container card-container">
-    <h1>Enter 3D Printing Parameters</h1>
+    <header class="hero-section text-white text-center d-flex flex-column justify-content-center align-items-center">
+        <div class="container">
+            <h1 class="display-3 fw-bold">Intelligent 3D Printing</h1>
+            <p class="lead col-lg-8 mx-auto">
+                Leverage the power of machine learning to predict the optimal printing material based on your design parameters. Get accurate results, faster.
+            </p>
+            <a href="#prediction-form" class="btn btn-primary btn-lg mt-3">Start Predicting Now</a>
+        </div>
+    </header>
 
-    <form action="{{ url_for('predict') }}" method="post" class="form-box">
-        <div class="row">
-            <div class="col">
-                <label>Layer Height (mm)</label>
-                <input type="number" step="0.01" name="layer_height" required>
-            </div>
-            <div class="col">
-                <label>Wall Thickness (mm)</label>
-                <input type="number" step="0.01" name="wall_thickness" required>
+    <main id="prediction-form" class="container my-5">
+        <div class="card p-4 p-md-5 shadow-lg">
+            <div class="card-body">
+                <h2 class="card-title text-center text-primary mb-4">Enter 3D Printing Parameters</h2>
+                <form action="{{ url_for('predict') }}" method="post">
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="layer_height" class="form-label">Layer Height (mm)</label>
+                            <input type="number" step="0.01" name="layer_height" id="layer_height" class="form-control" placeholder="e.g., 0.2" required>
+                        </div>
+                        <div class="col-md-6 mt-3 mt-md-0">
+                            <label for="wall_thickness" class="form-label">Wall Thickness (mm)</label>
+                            <input type="number" step="0.01" name="wall_thickness" id="wall_thickness" class="form-control" placeholder="e.g., 1.2" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="infill_density" class="form-label">Infill Density (%)</label>
+                            <input type="number" name="infill_density" id="infill_density" class="form-control" placeholder="e.g., 20" required>
+                        </div>
+                        <div class="col-md-6 mt-3 mt-md-0">
+                            <label for="infill_pattern" class="form-label">Infill Pattern</label>
+                            <select name="infill_pattern_honeycomb" id="infill_pattern" class="form-select" required>
+                                <option value="" disabled selected>Select a Pattern</option>
+                                <option value="0">Grid</option>
+                                <option value="1">Honeycomb</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="nozzle_temperature" class="form-label">Nozzle Temperature (°C)</label>
+                            <input type="number" name="nozzle_temperature" id="nozzle_temperature" class="form-control" placeholder="e.g., 210" required>
+                        </div>
+                        <div class="col-md-6 mt-3 mt-md-0">
+                            <label for="bed_temperature" class="form-label">Bed Temperature (°C)</label>
+                            <input type="number" name="bed_temperature" id="bed_temperature" class="form-control" placeholder="e.g., 60" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="print_speed" class="form-label">Print Speed (mm/s)</label>
+                            <input type="number" name="print_speed" id="print_speed" class="form-control" placeholder="e.g., 60" required>
+                        </div>
+                        <div class="col-md-6 mt-3 mt-md-0">
+                            <label for="fan_speed" class="form-label">Fan Speed (%)</label>
+                            <input type="number" name="fan_speed" id="fan_speed" class="form-control" placeholder="e.g., 100" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <label for="roughness" class="form-label">Roughness (μm)</label>
+                            <input type="number" step="any" name="roughness" id="roughness" class="form-control" placeholder="e.g., 20.3" required>
+                        </div>
+                        <div class="col-md-4 mt-3 mt-md-0">
+                            <label for="tension_strength" class="form-label">Tension Strength (MPa)</label>
+                            <input type="number" step="any" name="tension_strenght" id="tension_strength" class="form-control" placeholder="e.g., 34. tension_strenght is correct name" required>
+                        </div>
+                        <div class="col-md-4 mt-3 mt-md-0">
+                            <label for="elongation" class="form-label">Elongation (%)</label>
+                            <input type="number" step="any" name="elongation" id="elongation" class="form-control" placeholder="e.g., 2.9" required>
+                        </div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">Predict Material</button>
+                    </div>
+
+                </form>
             </div>
         </div>
+    </main>
 
-        <div class="row">
-            <div class="col">
-                <label>Infill Density (%)</label>
-                <input type="number" name="infill_density" required>
-            </div>
-            <div class="col">
-                <label>Infill Pattern</label>
-                <select name="infill_pattern_honeycomb" required>
-                    <option value="" disabled selected>Select Pattern</option>
-                    <option value="0">Grid</option>
-                    <option value="1">Honeycomb</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <label>Nozzle Temperature (°C)</label>
-                <input type="number" name="nozzle_temperature" required>
-            </div>
-            <div class="col">
-                <label>Bed Temperature (°C)</label>
-                <input type="number" name="bed_temperature" required>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <label>Print Speed (mm/s)</label>
-                <input type="number" name="print_speed" required>
-            </div>
-            <div class="col">
-                <label>Fan Speed (%)</label>
-                <input type="number" name="fan_speed" required>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <label>Roughness</label>
-                <input type="number" step="0.01" name="roughness" required>
-            </div>
-            <div class="col">
-                <label>Tension Strength</label>
-                <input type="number" step="0.01" name="tension_strenght" required>
-            </div>
-            <div class="col">
-                <label>Elongation</label>
-                <input type="number" step="0.01" name="elongation" required>
-            </div>
-        </div>
-
-        <button type="submit">Predict Material</button>
-    </form>
-</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

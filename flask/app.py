@@ -4,11 +4,11 @@ import joblib
 
 app = Flask(__name__)
 
-# Load model and scaler
+
 model = joblib.load('3d_printer.pkl')
 scaler = joblib.load('Min_max_scaler.pkl')
 
-# Features in exact order
+
 model_features = [
     'layer_height', 'wall_thickness', 'infill_density',
     'nozzle_temperature', 'bed_temperature', 'print_speed',
@@ -16,13 +16,10 @@ model_features = [
     'infill_pattern_honeycomb'
 ]
 
-# Map boolean prediction to material name
 def map_material(pred):
     return 'PLA' if pred == True else 'ABS'
 
-# -----------------------------
-# Routes
-# -----------------------------
+
 @app.route('/')
 def index():
     # Landing page
