@@ -55,9 +55,12 @@ POST /predict              – Submit form data and return prediction
 GET /result                – Result page (`result.html`)
 ## Work Flow
 
+## Work Flow
+
 - User uploads a 3D printing parameter dataset via the web app.
 - The system pre-processes the data using the saved Min_max_scaler.pkl.
 - User selects the input parameters (like layer height, infill density, nozzle temperature, etc.) for prediction.
 - The trained model 3d_printer.pkl predicts the most suitable 3D printing material.
 - The prediction result is displayed to the user on the web interface.
 - User can view the given parameters on screen with result.
+
