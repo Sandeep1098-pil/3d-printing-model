@@ -107,8 +107,3 @@ A `.gitignore` file was added to protect sensitive files and local artifacts:
 - `secrets.json`, `credentials.json`
 - `.idea/`, `.vscode/`
 
-## Notes
-
-- `users.db` is generated automatically when the app first runs.
-- If you want to deploy to GitHub Pages or another platform, adjust the workflow to your chosen provider.
-
