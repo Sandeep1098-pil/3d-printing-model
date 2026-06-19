@@ -1,66 +1,114 @@
+# 3D Printing Material Prediction Web App
 
-# 3D Printer Material Prediction Using Machine Learning
+A Flask-based web application that predicts the best 3D printing filament material using a machine learning model. The app includes secure JWT authentication, SQLite user storage, and a polished login/register flow.
 
-A machine learning model for predicting the optimal 3D printer material based on design specifications and printing requirements. By analyzing material properties, print parameters, and desired outcomes, this project aims to recommend suitable printing materials, aiding designers, engineers, and manufacturers in selecting the most appropriate materials for 3D printing applications.
+## What this project includes
 
+- Flask web app with model-driven material prediction
+- Secure login and registration using JWT stored in cookies
+- SQLite database for user credentials
+- Tabbed login/register page with username/password/confirm-password support
+- Model inference using pre-trained `3d_printer.pkl` and `Min_max_scaler.pkl`
+- GitHub Actions workflow for CI and deployment readiness
+- `.gitignore` to protect credentials, local environment files, and model/database artifacts
 
-##  Features
+## Repository structure
 
-- **Layer Height:** Thickness of each printed layer, affecting surface quality and print time.  
-- **Wall Thickness:** Outer shell thickness that determines strength and durability.  
-- **Infill Density:** Percentage of internal fill controlling weight, strength, and material use.  
-- **Infill Pattern:** Geometric design inside the model that affects strength and flexibility.  
-- **Nozzle Temperature:** Heat of the nozzle to properly melt and extrude filament.  
-- **Bed Temperature:** Heat of the print bed to improve layer adhesion and prevent warping.  
-- **Print Speed:** Speed of the printer head, influencing print time and surface quality.  
-- **Material:** Type of filament (e.g., PLA, ABS, PETG) used for printing.  
-- **Fan Speed:** Cooling rate of the printed layer to enhance surface finish and bonding.  
-- **Roughness:** Surface smoothness level of the final printed part.  
-- **Tensile Strength:** Maximum stress the printed part can withstand before breaking.  
-- **Elongation:** Measure of how much the printed material can stretch before failure.
-
-## Project Structure
 ```
 3d-printing-model/
-│
-├─ dataset/
-│
+├─ .github/
+│  └─ workflows/
+│     └─ python-app.yml
 ├─ flask/
 │  ├─ static/
 │  │  ├─ css/
+│  │  │  └─ auth.css
 │  │  ├─ images/
 │  │  └─ js/
+│  │     └─ auth.js
 │  ├─ templates/
+│  │  ├─ about.html
+│  │  ├─ auth.html
+│  │  ├─ home.html
+│  │  ├─ index.html
+│  │  └─ result.html
 │  ├─ 3d_printer.pkl
+│  ├─ Min_max_scaler.pkl
 │  ├─ app.py
-│  └─ Min_max_scaler.pkl
-│
+│  ├─ requirements.txt
+│  └─ users.db  # runtime-generated
+├─ dataset/
 ├─ Output video/
-│
 ├─ training/
-│  ├─ .ipynb_checkpoints/
-│  ├─ 3_printing.ipynb
-│  └─ my_data.csv
-│
-└─ External Libraries/
+└─ .gitignore
 ```
-## API Reference
 
-## 🌐 Web Routes
+## Installation
 
-GET /                      – Landing page (`index.html`)  
-GET /home                  – Prediction form (`home.html`)  
-GET /about                 – About page (`about.html`)  
-POST /predict              – Submit form data and return prediction
-GET /result                – Result page (`result.html`)
-## Work Flow
+1. Clone the repository:
+   ```bash
+   git clone <repo-url>
+   cd 3d-printing-model/flask
+   ```
+2. Create and activate a virtual environment:
+   ```bash
+   python -m venv .venv
+   .\.venv\Scripts\activate
+   ```
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Start the app:
+   ```bash
+   python app.py
+   ```
+5. Open `http://127.0.0.1:5000` in your browser.
 
-## Work Flow
+## Usage
 
-- User uploads a 3D printing parameter dataset via the web app.
-- The system pre-processes the data using the saved Min_max_scaler.pkl.
-- User selects the input parameters (like layer height, infill density, nozzle temperature, etc.) for prediction.
-- The trained model 3d_printer.pkl predicts the most suitable 3D printing material.
-- The prediction result is displayed to the user on the web interface.
-- User can view the given parameters on screen with result.
+- Visit `/auth` for login or registration.
+- After signing in, access `/home` to submit print parameters.
+- The app predicts PLA or ABS and shows a result page.
+- Use `/logout` to end the session.
+
+## Available routes
+
+- `GET /` — landing page
+- `GET /auth` — login/register screen
+- `POST /auth` — authenticate or register user
+- `GET /home` — prediction page (requires login)
+- `GET /about` — about page (requires login)
+- `POST /predict` — model prediction route (requires login)
+- `GET /logout` — sign out
+
+## GitHub Actions deployment
+
+A GitHub Actions workflow file is added at:
+- `.github/workflows/python-app.yml`
+
+It performs:
+- repository checkout
+- Python setup
+- dependency installation
+- simple Python compile check
+
+Push to `main` or `master` to trigger CI.
+
+## Security and .gitignore
+
+A `.gitignore` file was added to protect sensitive files and local artifacts:
+- `.venv/`
+- `__pycache__/`
+- `.env`
+- `*.db`
+- `*.pkl`
+- `*.key`, `*.pem`
+- `secrets.json`, `credentials.json`
+- `.idea/`, `.vscode/`
+
+## Notes
+
+- `users.db` is generated automatically when the app first runs.
+- If you want to deploy to GitHub Pages or another platform, adjust the workflow to your chosen provider.
 

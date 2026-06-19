@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Material Predictor</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/auth.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="tabs">
+        <button class="tab active" id="registerTab">
+            Register
+        </button>
+
+        <button class="tab" id="loginTab">
+            Login
+        </button>
+    </div>
+
+    {% if error %}
+    <div class="form-error">
+        {{ error }}
+    </div>
+    {% endif %}
+
+    <!-- Register Form -->
+    <div id="registerContent" class="content">
+
+        <form id="signupForm" method="POST">
+
+            <input type="hidden"
+                   name="action"
+                   value="signin">
+
+            <label>Username</label>
+            <input type="text"
+                   name="username"
+                   placeholder="Choose username"
+                   required>
+
+            <label>Password</label>
+            <input type="password"
+                   id="signupPassword"
+                   name="password"
+                   placeholder="Create password"
+                   required>
+
+            <label>Confirm Password</label>
+            <input type="password"
+                   id="signupConfirm"
+                   name="confirm_password"
+                   placeholder="Confirm password"
+                   required>
+
+            <button type="submit"
+                    class="submit-btn">
+                Create Account
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- Login Form -->
+    <div id="loginContent" class="content hidden">
+
+        <form method="POST">
+
+            <input type="hidden"
+                   name="action"
+                   value="login">
+
+            <label>Username</label>
+            <input type="text"
+                   name="username"
+                   placeholder="Enter username"
+                   required>
+
+            <label>Password</label>
+            <input type="password"
+                   name="password"
+                   placeholder="Enter password"
+                   required>
+
+            <button type="submit"
+                    class="submit-btn">
+                Login
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+
+</body>
+</html>

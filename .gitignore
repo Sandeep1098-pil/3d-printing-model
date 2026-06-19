@@ -1,0 +1,57 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+env/
+ENV/
+venv/
+
+# Python
+*.log
+*.pot
+*.py[cod]
+*$py.class
+
+# SQLite database
+*.db
+
+# MacOS
+.DS_Store
+
+# VS Code settings
+.vscode/
+.idea/
+
+# Local environment variables
+.env
+.env.*
+
+# Secrets and credentials
+secrets.json
+credentials.json
+*.pem
+*.key
+
+# Data files
+*.csv
+*.xlsx
+
+dataset/
+
+# Output directories
+Output video/
+training/
+
+# Notebook files
+.ipynb_checkpoints/
+
+# Model files
+
+# Local database files
+*.db
+users.db
+*.sqlite3
+
+# GitHub Actions workflows
+# Keep workflow files committed, do not ignore the repo's YAML workflow definitions.

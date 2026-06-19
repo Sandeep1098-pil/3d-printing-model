@@ -13,7 +13,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
-</head>s
+</head>
 <body>
 
 <header>
@@ -29,9 +29,9 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <div class="btn-group">
                     <a href="{{ url_for('index') }}" class="btn btn-primary btn-sm me-2">Home</a>
-                    <a href="{{ url_for('home') }}" class="btn btn-primary btn-sm me-2">Predict</a>
-                    <a href="{{ url_for('about') }}" class="btn btn-primary btn-sm me-2">About Us</a>
-
+                    <a href="{{ url_for('home') }}" class="btn btn-outline-primary btn-sm me-2">Predict</a>
+                    <a href="{{ url_for('about') }}" class="btn btn-outline-primary btn-sm me-2">About</a>
+                    <a href="{{ url_for('auth', action='login') }}" class="btn btn-secondary btn-sm">Login</a>
                 </div>
             </div>
         </div>
