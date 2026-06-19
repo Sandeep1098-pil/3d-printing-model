@@ -8,7 +8,7 @@ import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'super-secret-key-123')
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['JWT_ALGORITHM'] = 'HS256'
 
 DATABASE_PATH = os.path.join(os.path.dirname(__file__), 'users.db')
@@ -50,6 +50,11 @@ def create_user(username, password):
     )
     conn.commit()
     conn.close()
+
+@app.route('/db-path')  
+def db_path():
+    import os
+    return os.path.abspath('users.db')
 
 
 def create_token(username):
