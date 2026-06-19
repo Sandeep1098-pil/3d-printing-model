@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, make_response
 import pandas as pd
 import joblib
-import sqlite3
+import mysql.connector
 import os
 import datetime
 import jwt
@@ -11,50 +11,63 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['JWT_ALGORITHM'] = 'HS256'
 
-DATABASE_PATH = os.path.join(os.path.dirname(__file__), 'users.db')
-
+def get_db():
+    return mysql.connector.connect(
+        host=os.environ.get("DB_HOST"),
+        user=os.environ.get("DB_USER"),
+        password=os.environ.get("DB_PASSWORD"),
+        database=os.environ.get("DB_NAME")
+    )
 
 def init_db():
-    conn = sqlite3.connect(DATABASE_PATH)
+    conn = get_db()
     cur = conn.cursor()
-    cur.execute(
-        '''
+
+    cur.execute("""
         CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT UNIQUE NOT NULL,
-            password_hash TEXT NOT NULL,
-            created_at TEXT NOT NULL
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            username VARCHAR(100) UNIQUE NOT NULL,
+            password_hash VARCHAR(255) NOT NULL,
+            created_at DATETIME NOT NULL
         )
-        '''
-    )
+    """)
+
     conn.commit()
     conn.close()
 
 
 def get_user(username):
-    conn = sqlite3.connect(DATABASE_PATH)
+    conn = get_db()
     cur = conn.cursor()
-    cur.execute('SELECT id, username, password_hash FROM users WHERE username=?', (username,))
+
+    cur.execute(
+        "SELECT id, username, password_hash FROM users WHERE username=%s",
+        (username,)
+    )
+
     row = cur.fetchone()
+
     conn.close()
     return row
 
 
 def create_user(username, password):
     password_hash = generate_password_hash(password)
-    conn = sqlite3.connect(DATABASE_PATH)
+
+    conn = get_db()
     cur = conn.cursor()
+
     cur.execute(
-        'INSERT INTO users (username, password_hash, created_at) VALUES (?, ?, ?)',
-        (username, password_hash, datetime.datetime.utcnow().isoformat())
-    )
+        """
+        INSERT INTO users
+        (username, password_hash, created_at)
+        VALUES (%s, %s, %s)
+        """,(username,password_hash,datetime.datetime.utcnow()))
+
     conn.commit()
     conn.close()
 
-@app.route('/db-path')  
-def db_path():
-    import os
-    return os.path.abspath('users.db')
+
 
 
 def create_token(username):
