@@ -55,3 +55,4 @@ users.db
 
 # GitHub Actions workflows
 # Keep workflow files committed, do not ignore the repo's YAML workflow definitions.
+*.Output video
